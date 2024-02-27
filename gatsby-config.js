@@ -15,16 +15,51 @@ module.exports = {
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [
-    `gatsby-plugin-image`,
+
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: [
+          
+        ],
+        // MDX'den JSX'e geçirilirken kullanılacak bileşenler:
+        extensions: ['.mdx', '.md'],
+        defaultLayouts: {
+          default: require.resolve('./src/components/layout.js'),
+        },
+      },
+    },
+
+    `gatsby-plugin-postcss`,
+   `gatsby-plugin-image`,
+   `gatsby-plugin-sharp`,
+   `gatsby-transformer-sharp`,
+    `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `museums`,
+        path: `${__dirname}/src/markdown/museums/`, // Bu, markdown dosyalarınızın bulunduğu yol
+      },
+    },
+   
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
+        path: `${__dirname}/src/images`, // Bu, resim dosyalarınızın bulunduğu yol
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include:  /\.svg$/, // This will match all .svg f // Assumes your SVG files are located in /src/images
+        },
+      },
+    },
+    
+    
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
